@@ -18,8 +18,12 @@
 
 /* --- GPIO registres ---------------------------------------------------- */
 
+/* Port output data register (GPIOx_ODR) */
+#define GPIO_ODR(port)			MMIO32((port) + 0x0c)
+#define GPIOC_ODR			GPIO_ODR(GPIOC)
+
 /* Port configuration register low (GPIOx_CRL) */
-#define GPIO_CRL(port)			MMIO32((port) + 0x00
+#define GPIO_CRL(port)			MMIO32((port) + 0x00)
 #define GPIOC_CRL			GPIOC_CRL(GPIOC)
 
 /* Port configuration register high (GPIOx_CRH) */
