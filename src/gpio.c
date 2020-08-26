@@ -41,5 +41,27 @@ void gpio_set_mode(uint32_t gpioport, uint8_t mode, uint8_t cnf, uint16_t gpios)
 	tmp32 |= (mode << offset) | (cnf << (offset + 2));
 
 	/* Write tmp32 into crl or crh, leavve the other unchanged. */
-	/* TODO */
+		crl = (i < 8) ? tmp32 : crl;
+		crh = (i >= 8) ? tmp32 : crh;
 	 }
+
+	GPIO_CRL(gpioport) = crl;
+	GPIO_CRH(gpioport) = crh;
+}
+
+/** @brief Toggle a Group of Pins
+
+Toggle one or more pins of the given GPIO port. The toggling is not atomic, but
+the non-toggled pins are not affected.
+
+@param[in] gpioport Unsigned int32. Port identifier.
+@param[in] gpios Unsigned int16. Pin identifiers.
+	     If multiple pins are to be changed, use bitwise OR '|' to separate
+	     them.
+*/
+void gpio_toggle(uint32_t gpioport, uint16_t gpios)
+{
+	uint32_t port = GPIO_ODR(gpioport);
+	GPIO_BSRR(gpioport) = ((port & gpios) << 16) | (~port & gpios);
+}
+
