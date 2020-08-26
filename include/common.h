@@ -6,6 +6,7 @@
 
 /* Generic memory-mapped I/O accessor functions */
 #define MMIO32(addr)		(*(volatile uint32_t *)(addr))
+#define MMIO16(addr)		(*(volatile uint16_t *)(addr))
 
 /* Generic bit definition */
 #define BIT0   (1<<0)
