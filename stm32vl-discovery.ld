@@ -1,22 +1,3 @@
-/*
- * This file is part of the libopencm3 project.
- *
- * Copyright (C) 2009 Uwe Hermann <uwe@hermann-uwe.de>
- *
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 /* Linker script for ST STM32VLDISCOVERY (STM32F100RB, 128K flash, 8K RAM). */
 
 /* Define memory regions. */
@@ -27,5 +8,44 @@ MEMORY
 }
 
 /* Include the common ld script. */
-INCLUDE cortex-m-generic.ld
+
+/* Enforce emmition of the vector table. */
+EXTERN (vector_table)
+
+/* Define the entry point of the output file. */
+ENTRY(reset_handler)
+
+/* Define sections. */
+SECTIONS
+{
+	.text : {
+		*(.vectors)	/* Vector table */
+		*(.text*)	/* Program code */
+		. = ALIGN(4);
+		*(.rodata*)	/* Read-only data */
+		. = ALIGN(4);
+	} >rom
+
+	. = ALIGN(4);
+	_etext = .;
+
+	data : {
+		_data = .;
+		*(.data*)	/* read-write initialized data */
+		. = ALIGN(4);
+		_edata = .;
+	} >ram AT >rom
+	_data_loadaddr = LOADADDR(.data);
+	.bss : {
+		*(.bss*)	/* Read-write initialized data */
+		*(COMMO)
+		. = ALIGN(4);
+		_ebss = .;
+	} >ram
+
+	. = ALIGN(4);
+	end = .;
+}
+
+PROVIDE(_stack = ORIGIN(ram) + LENGTH(ram));
 
