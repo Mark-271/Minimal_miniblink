@@ -38,7 +38,7 @@
 #define GPIO_CNF_OUTPUT_PUSHPULL	0x00
 
 /* Pin mode (MODE[1:0]) values */
-#define GPIO_MODE_OUTPUT_2MHz		0x02
+#define GPIO_MODE_OUTPUT_2_MHz		0x02
 
 /* --- GPIO Registers ------------------------------------------------------ */
 

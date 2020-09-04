@@ -5,7 +5,6 @@
 #include <stdbool.h>
 
 /* Generic memory-mapped I/O accessor functions */
-#define
 #define MMIO32(addr)		(*(volatile uint32_t *)(addr))
 #define MMIO16(addr)		(*(volatile uint16_t *)(addr))
 #define MMIO8(addr)		(*(volatile uint8_t *)(addr))

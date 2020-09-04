@@ -13,8 +13,8 @@
 enum rcc_periph_clken {
 	/* APB2 peripherals */
 	RCC_GPIOC	= _REG_BIT(0x18, 4), /*VNC*/
-}
+};
 
-void rcc_periph_clock_enable (enum rcc_periph_clken clken)
+void rcc_periph_clock_enable (enum rcc_periph_clken clken);
 
 #endif /* RCC_H */

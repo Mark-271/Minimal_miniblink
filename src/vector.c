@@ -2,9 +2,10 @@
 #include <vector.h>
 
 /* load optional platform dependent initialization routines */
-#include <vector_chipset.c>
+static void pre_main(void) {} /* TODO */
+
 /* load the weak symbols for IRQ_HANDLERS */
-#include <vector_nvic.c>
+#include "vector_nvic.c"
 
 /* Less common symbols exported by the linker script(s): */
 typedef void (*funcp_t) (void);
