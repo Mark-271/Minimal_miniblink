@@ -17,4 +17,19 @@
 /* PERIPH_BASE_AHB + 0x8800 (0x4002 0800 -0x4002 0FFF): Reserved */
 #define RCC_BASE			(PERIPH_BASE_AHB + 0x09000)
 
+/* --- ARM CORTEX-M3 specific definitions ----------------------------- */
+
+/* Private peripheral bus - Internal */
+#define PPBI_BASE			(0xE0000000U)
+
+#define SCS_BASE			(PPBI_BASE + 0xE000)
+
+/* --- SCS: System Control Space --- */
+
+/* SCB: System Control Block */
+#define SCB_BASE			(SCS_BASE + 0x0D00)
+
+/* NVIC: Nested Vector Interrupt Controller */
+#define NVIC_BASE			(SCS_BASE + 0x0100)
+
 #endif /* MEMORYMAP_H */
