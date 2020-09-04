@@ -1,30 +1,10 @@
-/*
- * This file is part of the libopencm3 project.
- *
- * Copyright (C) 2010 Piotr Esden-Tempski <piotr@esden.net>,
- * Copyright (C) 2012 chrysn <chrysn@fsfe.org>
- *
- * This library is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library. If not, see <http://www.gnu.org/licenses/>.
- */
-
-#include <libopencm3/cm3/scb.h>
-#include <libopencm3/cm3/vector.h>
+#include <scb.h>
+#include <vector.h>
 
 /* load optional platform dependent initialization routines */
-#include "../dispatch/vector_chipset.c"
+#include <vector_chipset.c>
 /* load the weak symbols for IRQ_HANDLERS */
-#include "../dispatch/vector_nvic.c"
+#include <vector_nvic.c>
 
 /* Less common symbols exported by the linker script(s): */
 typedef void (*funcp_t) (void);
