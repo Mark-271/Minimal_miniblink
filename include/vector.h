@@ -25,7 +25,7 @@
  * pointers in the efm32_vector_table_t struct. */
 typedef void (*vector_table_entry_t)(void);
 
-typedef struct {
+struct vector_table {
 	unsigned int *initial_sp_value; /**< Initial stack pointer value. */
 	vector_table_entry_t reset;
 	vector_table_entry_t nmi;
@@ -40,10 +40,10 @@ typedef struct {
 	vector_table_entry_t pend_sv;
 	vector_table_entry_t systick;
 	vector_table_entry_t irq[NVIC_IRQ_COUNT];
-} vector_table_t;
+};
 
 /* Common symbols exported by the linker script(s): */
 extern unsigned _data_loadaddr, _data, _edata, _ebss, _stack;
-extern vector_table_t vector_table;
+extern struct vector_table vector_table;
 
 #endif /* VECTOR_H */
