@@ -1,9 +1,11 @@
-#include <gpio.h>
-#include <rcc.h>
 #include <stdint.h>
+#include <vector.h>
 
 /* Generic memory-mapped I/O accessor function */
 #define MMIO32(addr)			(*(volatile int32_t *)(addr))
+
+/* System control block configuration and control register */
+#define SCB_CCR				MMIO32(0xE000ED14)
 
 /* APB2 Peripheral clock enable register */
 #define RCC_APB2ENR			MMIO32(0x40021018)
@@ -12,7 +14,7 @@
 #define GPIOC_CRH			MMIO32(0x40011004)
 
 /* Port bit configuration */
-#define GPIO_CNF_PUSHPULL		0x00
+#define GPIO_CNF_OUTPUT_PUSHPULL		0x00
 
 /* Output mode bits */
 #define GPIO_MODE_OUTPUT_2_MHz		0x02
@@ -25,6 +27,35 @@
 
 /* General purpose reset register */
 #define GPIOC_BRR			MMIO32(0x40011014)
+
+/* --- The implementation of vector interrupt table ------------------------ */
+
+int main(void);
+
+__attribute__ ((section(".vectors")))
+struct vector_table vector_table = {
+	.initial_sp_value	= &_stack,
+	.reset			= reset_handler,
+};
+
+void __attribute__((weak)) reset_handler(void)
+{
+	volatile unsigned *src, *dest;
+
+	for (src = &_data_loadaddr, dest = &_data;
+		dest < &_edata;
+		src++, dest++) {
+		*dest = *src;
+	}
+
+	/* Ensure 8-byte aligment of stack pointer on interrupts */
+	SCB_CCR |= (1 << 9);
+
+	/* Call the application's entry point. */
+	(void)main();
+}
+
+/* ------------------------------------------------------------------------- */
 
 int main(void)
 {

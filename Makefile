@@ -12,11 +12,7 @@ LD		:= $(CROSS_COMPILE)gcc
 OBJCOPY		:= $(CROSS_COMPILE)objcopy
 STFLASH		= $(shell which st-flash)
 
-OBJS += \
-	src/main.o	\
-	src/vector.o	\
-	src/gpio.o	\
-	src/rcc.o
+OBJS 		+= src/main.o
 
 CFLAGS		+= -O2 -std=c89 $(ARCH_FLAGS) -fno-common
 CPPFLAGS	:= -Iinclude -Wall
