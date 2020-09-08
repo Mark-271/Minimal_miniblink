@@ -15,7 +15,7 @@ STFLASH		= $(shell which st-flash)
 OBJS 		+= src/main.o
 
 CFLAGS		+= -O2 -std=c89 $(ARCH_FLAGS) -fno-common
-CPPFLAGS	:= -Iinclude -Wall
+CPPFLAGS	:= -Wall
 LDFLAGS		+= --static -nostartfiles
 LDFLAGS		+= -T$(LDSCRIPT)
 LDFLAGS		+= $(ARCH_FLAGS)
