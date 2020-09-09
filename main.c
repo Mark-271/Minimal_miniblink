@@ -4,8 +4,8 @@
 #define SCB_CCR				MMIO32(0xE000ED14)
 #define RCC_APB2ENR			MMIO32(0x40021018)
 #define GPIOC_CRH			MMIO32(0x40011004)
-#define GPIO_CNF			0x00
-#define GPIO_MODE			0x02
+#define GPIO_CNF_MASK			0x03
+#define GPIO_MODE_PP			0x02
 #define GPIO8				(1 << 8)
 #define GPIOC_BSRR			MMIO32(0x40011010)
 #define GPIOC_BRR			MMIO32(0x40011014)
@@ -27,8 +27,7 @@ int main(void)
 	RCC_APB2ENR |= (1 << 4);
 
 	/* Set GPIO8 (in GPIO port C) to 'output push-pull'. */
-	GPIOC_CRH = (GPIO_CNF << 2);
-	GPIOC_CRH |= (GPIO_MODE << 0);
+	GPIOC_CRH = (GPIOC_CRH &= ~(GPIO_CNF_MASK << 2)) | (GPIO_MODE_PP << 0);
 
 	/* Blink the LED (PC8) on the board. */
 	while (1) {
