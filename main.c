@@ -50,6 +50,10 @@ void reset_handler(void)
 		*dest = *src;
 	}
 
+	while (dest < &_ebss) {
+		*dest++ = 0;
+	}
+
 	/* Ensure 8-byte aligment of stack pointer on interrupts */
 	SCB_CCR |= (1 << 9);
 
